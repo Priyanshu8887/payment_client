@@ -76,7 +76,11 @@ export const Users = () => {
             .catch(err => {
                 console.error("Error fetching users:", err);
             });
-    }, [filter]);
+    }, [filter]); 
+
+    const token = localStorage.getItem("token");
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const currentUserId = payload.userId;
 
     return (
         <>
@@ -92,9 +96,11 @@ export const Users = () => {
                 />
             </div>
             <div>
-                {users.map(user => (
-                    <User key={user._id} user={user} />
-                ))}
+               {users
+                 .filter(user => user._id !== currentUserId)
+                  .map(user => (
+                 <User key={user._id} user={user} />
+                  ))}
             </div>
         </>
     );
@@ -111,14 +117,14 @@ function User({ user }) {
                         {user.firstName[0]}
                     </div>
                 </div>
-                <div className="flex flex-col justify-center h-ful">
+                <div className="flex flex-col justify-center h-full">
                     <div>
                         {user.firstName} {user.lastName}
                     </div>
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center h-ful">
+            <div className="flex flex-col justify-center h-full">
                 <Button
                     onClick={() => {
                         navigate("/send?id=" + user._id + "&name=" + user.firstName);

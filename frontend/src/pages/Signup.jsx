@@ -111,8 +111,9 @@ export const Signup = () => {
                     }
                   );
 
-                  localStorage.setItem("token", response.data.token);
-                  navigate("/dashboard");
+                 // localStorage.setItem("token", response.data.token);
+                 // navigate("/dashboard");
+                   navigate("/signin");
                 } catch (err) {
                   console.error("Signup failed:", err);
                 }

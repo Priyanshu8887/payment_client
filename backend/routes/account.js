@@ -20,7 +20,9 @@ router.post("/transfer", authMiddleware, async (req, res) => {
     const session = await mongoose.startSession();
 
     session.startTransaction();
-    const { amount, to } = req.body;
+  //  const { amount, to } = req.body;
+    const amount = Number(req.body.amount);
+    const to = req.body.to;
 
     // Fetch the accounts within the transaction
     const account = await Account.findOne({ userId: req.userId }).session(session);
